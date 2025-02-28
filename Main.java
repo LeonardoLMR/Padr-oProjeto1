@@ -12,7 +12,7 @@ public class Main {
   static Scanner entrada;
   //static Nota nota;
 
-  public static void main(String[] args) {
+public static void main(String[] args) {
     //REMOVA 
     //db = new DataBase(); 
     entrada = new Scanner(System.in);
@@ -21,7 +21,40 @@ public class Main {
    
     entrada.close();
   }
+
+public static String exportarDadosEstudante(){
+   DataBase db = DataBase.getInstance();
+   ArrayList<String[]> data = new ArrayList<String[]>();
   
+   ExportData exp = new ExportData();
+   ArrayList<Aluno> alunos = db.getAlunos();
+   for(int i = 0; i < alunos.size(); i++){
+     String[] sm = {"matricula", "alunos.get(i).getMatricula()"};
+     String[] sn = {"nome", alunos.get(i).getNome()};
+     String[] sc ={"cpf", alunos.get(i).getCpf()};
+     String[] st = {"telefone", alunos.get(i).getTelefone()};
+     String[] se =  {"endereco",alunos.get(i).getEndereco()};
+     data.add(sm);
+     data.add(sn);
+     data.add(sc);
+     data.add(st);
+     data.add(se);
+     
+   }
+   return exp.ArrayToXMLFormat(data, 5 , "student");
+ }
+
+
+ public static void importDadosEstudanteMEC() {
+    String xmlData = exportarDadosEstudante();
+    XMLparaJSON_Adapter adapter = new XMLparaJSON_Adapter();
+    String jsonData = adapter.convertXMLToJSON(xmlData);
+    
+    ImportDataMEC imec = new ImportDataMEC();
+    imec.importData(jsonData);
+}
+
+
 public static void menuPrincipal(){
     do { 
             
@@ -46,6 +79,7 @@ public static void menuPrincipal(){
       }
     } while (opcao != 0);
 }
+
 
 public static void menuCoordenador(){
     DataBase db = DataBase.getInstance();
@@ -72,11 +106,13 @@ public static void menuCoordenador(){
     System.out.println("║     6 - Cadastrar uma turma             ║");
     System.out.println("║     7 - Cadastrar um coordenador        ║");
     System.out.println("║  8 - Atribuir notas aos estudantes      ║");
-    System.out.println("║     9 - Mostrar a estatística          ║");
+    System.out.println("║     9 - Mostrar a estatística           ║");
     System.out.println("║      10 - Lista de recuperação          ║");
     System.out.println("║          11 - Lista geral               ║");
     System.out.println("║           12 - Histórico                ║");
-    System.out.println("║             0 - Sair                    ║");
+    System.out.println("║    13 - Exportar Dados do Estudante     ║");
+    System.out.println("║    14 - Importar Dados Estudante MEC    ║");
+    System.out.println("║               0 - Sair                  ║");
     System.out.println("╚═════════════════════════════════════════╝");
     System.out.print("Opção: ");
     opcao = entrada.nextInt(); 
@@ -117,6 +153,12 @@ public static void menuCoordenador(){
         break;
       case 12:
         exibirHistorico();
+        break;
+      case 13:
+        exportarDadosEstudante();
+        break;
+      case 14:
+        importDadosEstudanteMEC();
         break;
       case 0:
           System.out.println("Saindo...");
@@ -326,6 +368,7 @@ public static void exibirListaGeral(){
   }
 }
 
+
 public static void exibirHistorico(){
     DataBase db = DataBase.getInstance();
 
@@ -364,6 +407,7 @@ public static void cadastrarProfessor(){
   System.out.println("Professor cadastrado com sucesso!");
 
 }
+
 
 public static void vincularProfessorTurma(){
     DataBase db = DataBase.getInstance();
@@ -418,6 +462,7 @@ public static void cadastrarCurso() {
   System.out.println("Curso cadastrado com sucesso!");
 }
 
+
 public static void cadastrarAluno() {
   DataBase db = DataBase.getInstance();
 
@@ -443,6 +488,7 @@ public static void cadastrarAluno() {
   System.out.println("Aluno cadastrado com sucesso!");
 
 }
+
 
 public static void vincularEstudanteTurma(){
   DataBase db = DataBase.getInstance();
@@ -480,6 +526,7 @@ public static void vincularEstudanteTurma(){
     System.out.println("Opção Inválida - Operação Cancelada");
   }
 }
+
 
 public static void cadastrarTurma(){ 
   DataBase db = DataBase.getInstance();

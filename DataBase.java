@@ -18,8 +18,8 @@ public class DataBase {
     private ArrayList<Professor> professores;
     private ArrayList<Curso> cursos;
     private ArrayList<Turma> turmas;
-    private int senhaProfessor = 555555;
-    private int senhaCoordenador = 666666;
+    private int senhaProfessor = 654321;
+    private int senhaCoordenador = 123456;
 
     private DataBase() {
         this.alunos = new ArrayList<>();

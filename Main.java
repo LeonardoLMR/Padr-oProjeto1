@@ -45,7 +45,7 @@ public static String exportarDadosEstudante(){
  }
 
 
- public static void importDadosEstudanteMEC() {
+public static void importDadosEstudanteMEC() {
     String xmlData = exportarDadosEstudante();
     XMLparaJSON_Adapter adapter = new XMLparaJSON_Adapter();
     String jsonData = adapter.convertXMLToJSON(xmlData);
@@ -169,7 +169,6 @@ public static void menuCoordenador(){
     } while (opcao != 0);
 
 }
-
 
 public static void menuProfessor(){
   DataBase db = DataBase.getInstance();
@@ -300,7 +299,6 @@ public static void cadastrarNotas(){
     nota.setNota3(entrada.nextDouble());
 
     System.out.printf("Média: %.2f\n", nota.calcularMedia());
-    System.out.print("Situação: ");
     db.getTurmas().get(escolhaTurma).getAlunosTurma().get(escolhaEstudante).setNota(nota);
     nota.verificarSituacao();
 

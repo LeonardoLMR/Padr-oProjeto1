@@ -57,13 +57,17 @@ public double calcularMedia() {
 public boolean verificarSituacao() {
   boolean aprovado = false;
   double media = this.calcularMedia();
-
+  AlunoTurma alunoturma = new AlunoTurma();
+  
   if (media < 2.5) {
-    System.out.println("Reprovado");
+    alunoturma.setEstadoAluno(new Reprovado());
+    alunoturma.imprimirEstado();
   } else if (media < 7) {
-    System.out.println("Em recuperação");
+    alunoturma.setEstadoAluno(new Recuperacao());
+    alunoturma.imprimirEstado();
   } else {
-    System.out.println("Aprovado");
+    alunoturma.setEstadoAluno(new Ativo());
+    alunoturma.imprimirEstado();
     aprovado = true;
   }
 
